@@ -1,0 +1,32 @@
+#map { height: 600px; }
+div.a {
+  text-align: center;
+  font-family: Consolas;
+  padding-top: 30px;
+  padding-right: 20%;
+  padding-left: 20%;
+  font-size: 18px;
+}
+
+div.script {
+  text-align: left;
+  font-family: Consolas;
+  font-size: 10px;
+}
+
+th{
+  background-color: #b6cea0;
+  color: rgb(8, 8, 8);
+}
+table, th, td {
+  padding: 10px;
+    border: 2px solid #A9A9A9;
+    border-color: solid black;
+    border-collapse: collapse;
+}
+.button {
+	text-align: center;
+ 	font-family: Consolas;
+  font-size: 20px; 
+}
+
