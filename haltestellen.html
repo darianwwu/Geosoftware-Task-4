@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>GeoSoftware1 Assignment 5</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/1.0.4/leaflet.draw.css" />
+  <link rel="stylesheet" type="text/css" href="style.css">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.8.0/dist/leaflet.css"
+    integrity="sha512-hoalWLoI8r4UszCkZ5kL8vayOGVae1oxXe/2A4AO6J9+580uKHDO3JdHb7NzwwzK5xr/Fs0W40kiNHxM9vyTtQ=="
+    crossorigin="" />
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
+    crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+    integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous">
+  </script>
+</head>
+
+<body onload="onLoad()">
+
+
+
+  <header class="container">
+    <div class="wwu">
+      <img src="wwu.png" alt="">
+    </div>
+    <div class="ueberschrift">
+      Distanzberechnung & Haltestellen
+    </div>
+    <div class="unterueberschrift">
+      Haltestellen
+    </div>
+    <nav class="navbar navbar-expand-sm">
+      <a href="#" class="navbar-brand">
+      </a>
+      <button class="navbar-toggler mr-auto" data-toggle="collapse" data-target="#navbarMenu">
+        <span class="navbar-toggler-icon"> ☰</span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarMenu">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a href="index.html" class="button-3" role="button">Startseite</a> &nbsp
+          </li>
+          <li class="nav-item">
+            <a href="distanzen.html" class="button-3" role="button">Distanzen zu Points-of-Interest</a> &nbsp
+          </li>
+        </ul>
+      </div>
+    </nav>
+  </header>
+
+  <main role="main" class="container">
+    <div id="content">
+      <div id="map"></div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous">
+    </script>
+    <script src="https://unpkg.com/leaflet@1.8.0/dist/leaflet.js"
+      integrity="sha512-BB3hKbKWOc9Ez/TAwyWxNXeoV9c1v6FIeYiBieIWkpLjauysF18NzgR1MBNBXf8/KABdlkX68nAhlwcDFLGPCQ=="
+      crossorigin=""></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/1.0.4/leaflet.draw.js"></script>
+    <script src="pois.js"></script>
+    <script src="point.js"></script>
+    <script src="script.js"></script>
+    <script src='https://unpkg.com/@turf/turf@6/turf.min.js'></script>
+    <div>
+
+      <hr>
+
+
+
+
+      <button id="getLocationBtn" class="button-4" type="button">Meinen Standort abfragen</button>
+      <button id="refreshBtn" class="button-4" type="button">Aktualisieren</button>
+      <button id="getDataBtn" class="button-4" type="button">Los</button>
+      <button id="fetchBtn" class="button-4" type="button">Alle Bushaltestellen anzeigen</button>
+      <button id="auswahlbegrenzenBtn" class="button-4" type="button">Auswahl begrenzen</button>
+    </div>
+
+    <div id="geoJSON" class="script" align="center">
+    </div>
+
+
+    <br>
+    <div id="aufgabezwei" style="display: none">
+
+      <table style="width:75%" align="center" id="resultTable">
+        <tr>
+          <th>Coordinates</td>
+          <th>Point of Interest</td>
+          <th>Distance (in meters)</td>
+        </tr>
+      </table>
+    </div>
+
+    <table style="width:75%" align="center" id="resultTableNew">
+      <tr>
+        <th>Haltestelle Name</td>
+        <th>Koordinaten</td>
+        <th>Entfernung (in m)</td>
+      </tr>
+    </table>
+    <br />
+    <table style="width:75%" align="center" id="resultTableNewTakeOff">
+      <tr>
+        <th>Haltestelle Name</td>
+        <th>Richtung</td>
+        <th>Linie</td>
+        <th>Abfahrtszeit</td>
+      </tr>
+    </table>
+    <br>
+    <textarea rows="2" id="userPosition"></textarea><br>
+    Um die Bushaltestellen in der Nähe des Geo 1 Gebäudes zu erhalten nur auf "Los" klicken.<br>
+    Um die Bushaltestellen in der Nähe des eigenen Standorts zu erhalten zunächst auf "Meinen Standort abfragen", dann
+    auf "Aktualisieren" und dann auf "Los" klicken. <br>
+    Um alle Bushaltestellen auf der Karte anzuzeigen auf "Alle Bushaltestellen anzeigen" klicken.<br>
+    Um bestimmte Bushaltestellen auszuwählen, in der Karte mithilfe der Toolbar einen Bereich zeichnen und dann auf
+    "Auswahl begrenzen" klicken.<br><br>
+    Die Koordinaten in Tabelle 1 sind in der form Lat/Lon angegeben. <br>
+    m steht für Meter. <br>
+    Der rote Punkt steht für den Nutzerstandort. <br>
+  </main>
+  <footer class="container">
+    <hr>
+    Kurs: Geosoftware I SoSe 2022 &nbsp &nbsp Abgabe: Task 5 &nbsp &nbsp Autor: Darian Weiß <br>
+    Vorlage von: Noel Schnierer, Felix Niebl, Nick Jakuschona <br>
+    <a href="impressum.html" class="button-3" role="button">Impressum</a> &nbsp
+    <hr>
+  </footer>
+
+
+
+</body>
+
+</html>
