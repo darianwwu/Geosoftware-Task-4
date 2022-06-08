@@ -19,7 +19,8 @@
   </script>
 </head>
 
-<body>
+<body onload="onLoad()">
+
   <header class="container">
     <div class="wwu">
       <img src="wwu.png" alt="">
@@ -28,10 +29,8 @@
       Distanzberechnung & Haltestellen
     </div>
     <div class="unterueberschrift">
-      Startseite
+      Distanzberechnung
     </div>
-
-
     <nav class="navbar navbar-expand-sm">
       <a href="#" class="navbar-brand">
       </a>
@@ -41,7 +40,7 @@
       <div class="collapse navbar-collapse" id="navbarMenu">
         <ul class="navbar-nav">
           <li class="nav-item">
-            <a href="distanzen.html" class="button-3" role="button">Distanzen zu Points-of-Interest</a> &nbsp
+            <a href="index.html" class="button-3" role="button">Startseite</a> &nbsp
           </li>
           <li class="nav-item">
             <a href="haltestellen.html" class="button-3" role="button">Anzeigen von Haltestellen</a> &nbsp
@@ -49,17 +48,50 @@
         </ul>
       </div>
     </nav>
-
-
   </header>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous">
+  </script>
+  <script src="https://unpkg.com/leaflet@1.8.0/dist/leaflet.js"
+    integrity="sha512-BB3hKbKWOc9Ez/TAwyWxNXeoV9c1v6FIeYiBieIWkpLjauysF18NzgR1MBNBXf8/KABdlkX68nAhlwcDFLGPCQ=="
+    crossorigin=""></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/1.0.4/leaflet.draw.js"></script>
+  <script src="pois.js"></script>
+  <script src="point.js"></script>
+  <script src="script.js"></script>
+  <script src='https://unpkg.com/@turf/turf@6/turf.min.js'></script>
+
   <main role="main" class="container">
-    Willkommen auf der Startseite. <br>
-    Benutze die Links zur Navigation durch die verschiedenen Funktionen dieser Webseite.
-    <div class="katze">
-      <img src="katze.JPG" alt="">
+
+    <div>
+      Berechnung von Distanzen zu Points-of-Interest
+      <hr>
+
+
+      <textarea rows="2" id="userPosition"></textarea><br>
+
+      <button id="getLocationBtn" class="button-4" type="button">Meinen Standort abfragen</button>
+      <button id="refreshBtn" class="button-4" type="button">Aktualisieren</button>
+      <button id="getDataBtn" class="button-4" type="button" style="display: none">Los</button>
+      <button id="fetchBtn" class="button-4" type="button" style="display: none">Alle Bushaltestellen anzeigen</button>
+      <button id="auswahlbegrenzenBtn" class="button-4" type="button" style="display: none">Auswahl begrenzen</button>
     </div>
-    <div class="bildunterschrift">
-      Quelle: privat
+
+    <div id="geoJSON" class="script" align="center">
+    </div>
+
+
+    <br>
+    <div id="aufgabezwei">
+
+      <table style="width:75%" align="center" id="resultTable">
+        <tr>
+          <th>Coordinates</td>
+          <th>Point of Interest</td>
+          <th>Distance (in meters)</td>
+        </tr>
+      </table>
     </div>
   </main>
   <footer class="container">
@@ -69,7 +101,9 @@
     <a href="impressum.html" class="button-3" role="button">Impressum</a> &nbsp
     <hr>
   </footer>
-</body>
 
+
+
+</body>
 
 </html>
